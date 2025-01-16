@@ -41,8 +41,10 @@ main {
   }
 }
 
-@media screen and (min-width: 220px) and (max-width:426px) {
-    .OrdemServico {
-        width: 95vw;
-    }
+
+
+@media screen and (min-width: 300px) and (max-width:400px) {
+  span {
+      font-size: 15px;
+  }
 }
