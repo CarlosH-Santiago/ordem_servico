@@ -23,6 +23,26 @@ main {
 .OrdemServico {
   background-color: rgb(255, 196, 0);
   height: 150px;
+
+  margin-inline: 2px;
   border: 2px solid rgb(255, 255, 255);
   border-radius: 10px;
+}
+
+@media screen and (min-width: 1024px) {
+  .OrdemServico {
+    width: 24vw;
+  }
+}
+
+@media screen and (min-width: 425px)  and (max-width:1023px) {
+  .OrdemServico {
+    width: 48vw;
+  }
+}
+
+@media screen and (min-width: 220px) and (max-width:426px) {
+    .OrdemServico {
+        width: 95vw;
+    }
 }
