@@ -1,5 +1,5 @@
 <?php 
-include "../src/function-image-save.phpimage-save.php";
+include "../src/function-image-save.php";
 require "../config/conection_db.php";
 
   if(isset($_FILES['deletar'])) {
@@ -25,7 +25,7 @@ require "../config/conection_db.php";
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
     <link rel="stylesheet" href="../styles/header.css" />
-    <link rel="stylesheet" href="../styles/os_editor.css" />
+    <link rel="stylesheet" href="../styles/style_os_editor.css" />
   </head>
   <body>
     <header>
@@ -146,22 +146,22 @@ require "../config/conection_db.php";
               required
               value="CV MULTI VARIEDADES"
             />
-            <label class="b" id="razaoEmpresa" for="razaoSocial"
-              >Razão Social</label
+            <label class="b" id="cnpjEmpresa" for="cnpjEmpresa"
+              >CNPJ</label
             >
             <input
               class="right"
               type="text"
-              name="razaoSocial"
-              id="id_razaoSocial"
+              name="cnpjEmpresa"
+              id="id_cnpjEmpresa"
               required
-              value=""
+              value="36.070.021/0001-20"
             />
             <label class="c" id="emailEmpresa" for="email">E-mail</label>
             <input
               class="left"
               type="email"
-              name="email"
+              name="emailEmpresa"
               id="id_email"
               placeholder="exemple@email.com"
               value="cvmultivariedades@hotmail.com"
@@ -172,12 +172,12 @@ require "../config/conection_db.php";
             <input
               class="right"
               type="tel"
-              name="celular"
+              name="celularEmpresa"
               id="id_celular"
               placeholder="Ex.: +55 (75) 90000-0000"
-              pattern="\([0-9]{2}\)[0-9]{4,6}-[0-9]{3,4}$"
+              pattern="\(\d{2}\) 9\d{4}-\d{4}"
               required
-              value="+55 (75) 98247-7023"
+              value="(75) 98247-7023"
             />
           </div>
 
@@ -191,18 +191,18 @@ require "../config/conection_db.php";
               id="id_nome"
               required
             />
-            <label class="b" id="razaoCliente" for="razao">Razão Social</label>
+            <label class="b" id="cpfcnpjCliente" for="cpfCnpj">CPF/CNPJ</label>
             <input
               class="right"
               type="text"
-              name="razaoSocial"
-              id="id_razaoSocial"
+              name="cpfCnpj"
+              id="id_cpfCnpj"
             />
             <label class="c" id="emailCliente" for="Email">E-mail</label>
             <input
               class="left"
               type="email"
-              name="email"
+              name="emailCliente"
               id="id_email"
               placeholder="exemple@email.com"
             />
@@ -212,10 +212,10 @@ require "../config/conection_db.php";
             <input
               class="right"
               type="tel"
-              name="celular"
+              name="celularCliente"
               id="id_celular"
-              placeholder="Ex.: +55 (75) 90000-0000"
-              pattern="\([0-9]{2}\)[0-9]{4,6}-[0-9]{3,4}$"
+              placeholder="Ex.: (75) 90000-0000"
+              pattern="\(\d{2}\) 9\d{4}-\d{4}"
               required
             />
           </div>
@@ -249,11 +249,11 @@ require "../config/conection_db.php";
               placeholder="Ex.: Irará"
               required
             />
-            <label class="postal" id="postal" for="postal">Codigo postal</label>
+            <label class="CEP" id="CEP" for="CEP">Codigo postal</label>
             <input
-              id="postal-i"
+              id="CEP-i"
               type="tel"
-              name="postal"
+              name="CEP"
               id="id_postal"
               placeholder="Ex.: 444255-000"
               required
@@ -277,8 +277,8 @@ require "../config/conection_db.php";
             <input
               class="left"
               type="date"
-              name="horarioDeChegada"
-              id="id_hora_chegada"
+              name="dataDeChegada"
+              id="id_data_chegada"
               required
             />
             <label class="b" id="saida" for="horarioDeSaida"
@@ -287,8 +287,8 @@ require "../config/conection_db.php";
             <input
               class="right"
               type="date"
-              name="horarioDeSaida"
-              id="id_hora_chegada"
+              name="dataDeSaida"
+              id="id_data_chegada"
               required
             />
             <label class="valor" for="valor">Valor</label>

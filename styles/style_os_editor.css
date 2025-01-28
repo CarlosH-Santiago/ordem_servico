@@ -179,7 +179,7 @@ h4 {
     top: 62px;
 }
 
-.postal {
+.CEP {
     position: absolute;
     margin-block: 10px;
     left: 291px;
@@ -187,7 +187,7 @@ h4 {
 
 }
 
-#postal-i {
+#CEP-i {
     width: 38%;
 }
 
@@ -213,7 +213,7 @@ h4 {
     top: 20px;
 }
 
-input[name="horarioDeSaida"] {
+input[name="dataDeSaida"] {
     width: 36.5%;
 }
 
