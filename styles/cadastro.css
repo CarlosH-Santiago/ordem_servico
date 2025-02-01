@@ -22,7 +22,7 @@ body{
 
 .forms {
     width: 50vw;
-    height: 90vh;
+    height: 92vh;
     border: 2px solid #000000;
     border-radius: 10px;
     background-color: #006eff34;
@@ -76,3 +76,8 @@ i:hover {
     color: #001d36;
   }
   
+  .error { 
+    color: red; 
+    position: relative;
+    margin:   2px;
+}

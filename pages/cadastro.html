@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="forms">
-      <form method="post" action="">
+      <form method="post" action="" id="cadastroForm">
         <div class="top">
           
           <h3>
@@ -51,6 +51,8 @@
           <label for="senhaConf">Confirme sua Senha</label>
           <input type="password" name="senhaConf" id="senhaConf" placeholder="Senha" />    
           <i class="bi bi-eye" id="btn-showPassConfirm" onclick="showPassConfirm()"></i>
+
+          <p id="errorMessage" class="error"></p>
           
           <button type="submit" id="cadastrar" class=" btn btn-outline-warning text-light ">Cadastrar</button>
         </div>
@@ -60,6 +62,18 @@
   <script src="../assets/library/bootstrap.bundle.min.js"></script>
   <script src="../src/function_show_password.js"></script>
   <script>
+    document.getElementById("cadastroForm").addEventListener("submit", function(event) {
+        const senha = document.getElementById("senha").value;
+        const senhaConf = document.getElementById("senhaConf").value;
+        const errorMessage = document.getElementById("errorMessage");
 
-  </script>
+        if (senha !== senhaConf) {
+            event.preventDefault(); // Impede o envio do formulário
+            errorMessage.textContent = "As senhas não coincidem!";
+        } else {
+            errorMessage.textContent = "";
+        }
+    });
+</script>
+
 </html>
