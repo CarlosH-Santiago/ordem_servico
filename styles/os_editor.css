@@ -151,6 +151,23 @@ h4 {
     font-weight: bold;
 }
 
+.SITUACAO {
+    position: absolute;
+    left: 350px;
+}
+
+.SITUACAO label{
+    position: relative;
+}
+
+.SITUACAO select{
+    width: 20%;
+    position: relative;
+    left: 115px;
+    bottom: 20px;
+    border: none;
+}
+
 .a {
     position: absolute;
     margin-block: 10px;

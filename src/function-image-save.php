@@ -43,8 +43,8 @@ require '../config/conection_db.php';
         //movendo arquivos para a pasta e o banco de dados
         $moverArquivo = move_uploaded_file($ativoImage["tmp_name"], $caminho);
         if($moverArquivo == true ) {
-            $osdatabase->query("INSERT INTO tb_image_ativo (nome, caminho) 
-            VALUES ('$nomeNovoDoArquivo', '$caminho')") or die($osdatabase->error);
+            $osdatabase->query("INSERT INTO tb_image_ativo (nome, caminho, ativo_id) 
+            VALUES ('$nomeNovoDoArquivo', '$caminho', $ativo_id)") or die($osdatabase->error);
             echo "<p> Imagem do ativo enviada com seucesso! para acessa-la  
             <a tarket=\"_blank\" href=\"../../../storage/ordem_servico/ativo-image/$nomeNovoDoArquivo.$extensaoDoArquivo\">
             clique aqui</a> </p>";

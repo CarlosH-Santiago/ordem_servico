@@ -1,0 +1,78 @@
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 1vh;
+    background: #202020;
+    overflow: hidden;
+}
+.top {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.login {
+    position: relative;
+    left: 40%;
+}
+
+.forms {
+    width: 50vw;
+    height: 90vh;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    background-color: #006eff34;
+}
+
+.input-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+input {
+    border-radius: 30px;
+    width: 90%;
+    background-color: #d89400b7;
+    padding-block: 5px;
+    color: #ffffff; 
+    text-indent: 10px;
+}
+
+input::placeholder {
+    position: relative;
+    left: 10px;
+    color: #ffffff;
+}
+
+label {
+    margin-block: 15px;
+    color: #ffffff;
+    font-size: 25px;
+}
+
+#cadastrar{
+    color: #ffffff;
+    margin: 15px;
+    font-size: 25px;
+}
+
+i { 
+    cursor: pointer;
+    font-size: 25px;
+    position: relative;
+    left: 40%;
+    bottom: 20px;
+    color: #003b6e;
+    margin: -20px;
+  }
+  
+i:hover {
+    color: #001d36;
+  }
+  

@@ -1,14 +1,6 @@
 <?php
 require "../config/conection_db.php";
 
-if (isset($_FILES['deletar'])) {
-    $imagem_id = $_GET['deletar'];
-    deletarImagem($osdatabase, $imagem_id);
-}
-
-if (isset($_FILES['ativo_image']) && $_FILES['ativo_image']['error'] == 0) {
-    salvarImagem($osdatabase, $_FILES['ativo_image']);
-}
 
 //obtendo dados do formulario
 //obtendo dados da empresa
@@ -34,6 +26,8 @@ $UF = isset($_POST['UF']) ? $_POST['UF'] : '';
 $dataChegada = isset($_POST['dataDeChegada']) ? $_POST['dataDeChegada'] : ''; // Corrigido o nome
 $dataSaida = isset($_POST['dataDeSaida']) ? $_POST['dataDeSaida'] : ''; // Corrigido o nome
 $servico = isset($_POST['servico']) ? $_POST['servico'] : '';
+$valor = isset($_POST['valor']) ? str_replace(',', '.', $_POST['valor']) : '0.00';
+$situacao = isset($_POST['situacao']) ? $_POST['situacao'] : '';
 
 //obtendo dados dom ativo
 $nomeAtivo = isset($_POST['nomeAtivo']) ? $_POST['nomeAtivo'] : '';
@@ -42,16 +36,96 @@ $modelo = isset($_POST['modelo']) ? $_POST['modelo'] : '';
 $patrimonio = isset($_POST['patrimonio']) ? $_POST['patrimonio'] : '';
 
 //fazendo as inserções no banco de dados
+try {
 
-//incerções da empresa
-$osdatabase->query("INSERT INTO tb_empresa_responsavel (nome_fantasia, cnpj, email, telefone)
-VALUES (\"$nomeEmpresa\", \"$cnpjEmpresa\", \"$emailEmpresa\", \"$celularEmpresa\")");
 
-//incerções do cliente
-$osdatabase->query("INSERT INTO tb_cliente (nome, cpf_cnpj, email, telefone) VALUES ('$nomeCliente', '$cpf_cnpjCliente', '$celularCliente')");
+    $osdatabase->begin_transaction();
 
-//incerções serviço
+    // Verificar se a empresa já existe
+    $stmt = $osdatabase->prepare("SELECT empresa_id FROM tb_empresa_responsavel WHERE cnpj = ?");
+    $stmt->bind_param("s", $cnpjEmpresa);
+    $stmt->execute();
+    $verifyEmpresa = $stmt;
+    $stmt->store_result();
+    
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($empresa_id);
+        $stmt->fetch();
+        $stmt->close();
+    } else {
+        $stmt->close();
+        $stmt = $osdatabase->prepare("INSERT INTO tb_empresa_responsavel (nome_fantasia, cnpj, email, telefone) VALUES (?, ?, ?, ?)");
+        if (!$stmt) { die("Erro na preparação: " . $osdatabase->error); }
+        $stmt->bind_param("ssss", $nomeEmpresa, $cnpjEmpresa, $emailEmpresa, $celularEmpresa);
+        if (!$stmt->execute()) { die("Erro ao inserir empresa: " . $stmt->error); }
+        $empresa_id = $osdatabase->insert_id;
+        $stmt->close();
+    }
 
+
+//inserções do cliente
+    $stmt = $osdatabase->prepare("INSERT INTO tb_cliente (nome, cpf_cnpj, email, telefone) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $nomeCliente, $cpf_cnpjCliente, $emailCliente, $celularCliente);
+    $stmt->execute();
+    $cliente_id = $osdatabase->insert_id;
+    $stmt->close();
+
+//incerções local
+    $stmt = $osdatabase->prepare("INSERT INTO tb_endereco (endereco, bairro, cidade, cep, uf, cliente_id) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $endereco, $bairro, $cidade, $CEP, $UF, $cliente_id);
+    $stmt->execute();
+    $endereco_id = $osdatabase->insert_id;
+    $stmt->close();
+
+//inserções do ativo
+    $stmt = $osdatabase->prepare("INSERT INTO tb_ativo (nome, marca, modelo, patrimonio, cliente_id) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $nomeAtivo, $marca, $modelo, $patrimonio, $cliente_id);
+    $stmt->execute();
+    $ativo_id = $osdatabase->insert_id;
+    $stmt->close();
+
+//Inserções do serviço
+    $stmt = $osdatabase->prepare("INSERT INTO tb_ordem_servico (empresa_id, cliente_id, ativo_id, situacao, data_chegada, data_saida, servico, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssss", $empresa_id, $cliente_id, $ativo_id, $situacao, $dataChegada, $dataSaida, $servico, $valor);
+    $stmt->execute();
+    $os_id = $osdatabase->insert_id;
+    $stmt->close();
+
+//Incerção da imagem
+        //validação do formulario
+        if(isset($_FILES['ativo_image'])) {
+        $ativoImage = $_FILES['ativo_image'];
+        if($ativoImage['error'])
+        die("Falha ao enviar a imagem do ativo");
+        if($ativoImage['size'] > 3145728)
+        die("Arquivo muito grande! Maximo suportado é: 3MB");
+
+        //definindo variaveis de separação de campo
+        $pasta = "../../../storage/ordem_servico/ativo-image/";
+        $nomeDoArquivo = $ativoImage['name'];
+        $nomeNovoDoArquivo = uniqid();
+        $extensaoDoArquivo = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
+        $caminho = $pasta.$nomeNovoDoArquivo.".". $extensaoDoArquivo;
+
+        if($extensaoDoArquivo != "jpg" && $extensaoDoArquivo != 'png' && $extensaoDoArquivo != 'jpeg') 
+        die ("Tipo de arquivo não aceito");
+
+        //movendo arquivos para a pasta e o banco de dados
+        $moverArquivo = move_uploaded_file($ativoImage["tmp_name"], $caminho);
+        if($moverArquivo == true ) {
+            $osdatabase->query("INSERT INTO tb_image_ativo (nome, caminho, ativo_id) 
+            VALUES ('$nomeNovoDoArquivo', '$caminho', $ativo_id)") or die($osdatabase->error);
+        } else {
+            echo "<p>Erro ao enviar a imagem do ativo</p>";
+        }
+    }
+
+        $osdatabase->commit();
+
+} catch (Exception $e) {
+$osdatabase->rollback();
+
+}
 
 ?>
 
@@ -67,7 +141,7 @@ $osdatabase->query("INSERT INTO tb_cliente (nome, cpf_cnpj, email, telefone) VAL
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="../styles/header.css" />
-    <link rel="stylesheet" href="../styles/style_os_editor.css" />
+    <link rel="stylesheet" href="../styles/os_editor.css" />
 </head>
 
 <body>
@@ -211,17 +285,17 @@ $osdatabase->query("INSERT INTO tb_cliente (nome, cpf_cnpj, email, telefone) VAL
                         type="date"
                         name="dataDeChegada"
                         id="id_data_chegada"
-                        required />
+                         />
                     <label class="b" id="saida" for="horarioDeSaida">Horário de Saída</label>
                     <input
                         class="right"
                         type="date"
                         name="dataDeSaida"
                         id="id_data_chegada"
-                        required />
+                         />
                     <label class="valor" for="valor">Valor</label>
                     <p class="BRL">R$</p>
-                    <input type="text" id="valor" class="currency" placeholder="0,00" />
+                    <input type="text" id="valor" class="currency" placeholder="0,00" name="valor" />
                     <label id="servico" for="servico">Serviço Realizado</label>
                     <textarea
                         class="textarea"
@@ -260,16 +334,18 @@ $osdatabase->query("INSERT INTO tb_cliente (nome, cpf_cnpj, email, telefone) VAL
                         id="id_patrimonio"
                         required />
                 </div>
+                <div class="input-group SITUACAO row mx-1">
+
+                <label for="situacao">Situação da OS:</label>
+                <select name="situacao" id="situacao">
+                <option value="pendente">Pendente</option>
+                <option value="finalizada">Finalizada</option>
+                </select>
+                </div>
 
                 <button type="submit">Salvar</button>
             </div>
         </form>
-        <pre>
-            <?php
-            var_dump($_POST);
-
-            ?>
-<pre>
     </main>
 
     <section class="cvimage"><img src="../assets/image/CV MULTIVARIEDADES_COLOR.png" alt="cvmulitivariedades"></section>
