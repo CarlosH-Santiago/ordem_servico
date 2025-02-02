@@ -45,9 +45,8 @@ try {
     $stmt = $osdatabase->prepare("SELECT empresa_id FROM tb_empresa_responsavel WHERE cnpj = ?");
     $stmt->bind_param("s", $cnpjEmpresa);
     $stmt->execute();
-    $verifyEmpresa = $stmt;
     $stmt->store_result();
-    
+
     if ($stmt->num_rows > 0) {
         $stmt->bind_result($empresa_id);
         $stmt->fetch();
@@ -55,9 +54,13 @@ try {
     } else {
         $stmt->close();
         $stmt = $osdatabase->prepare("INSERT INTO tb_empresa_responsavel (nome_fantasia, cnpj, email, telefone) VALUES (?, ?, ?, ?)");
-        if (!$stmt) { die("Erro na preparação: " . $osdatabase->error); }
+        if (!$stmt) {
+            die("Erro na preparação: " . $osdatabase->error);
+        }
         $stmt->bind_param("ssss", $nomeEmpresa, $cnpjEmpresa, $emailEmpresa, $celularEmpresa);
-        if (!$stmt->execute()) { die("Erro ao inserir empresa: " . $stmt->error); }
+        if (!$stmt->execute()) {
+            die("Erro ao inserir empresa: " . $stmt->error);
+        }
         $empresa_id = $osdatabase->insert_id;
         $stmt->close();
     }
@@ -141,7 +144,7 @@ $osdatabase->rollback();
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="../styles/header.css" />
-    <link rel="stylesheet" href="../styles/os_editor.css" />
+    <link rel="stylesheet" href="../styles/ordem_servico_editor.css" />
 </head>
 
 <body>

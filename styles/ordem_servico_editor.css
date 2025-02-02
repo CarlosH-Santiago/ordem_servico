@@ -153,7 +153,7 @@ h4 {
 
 .SITUACAO {
     position: absolute;
-    left: 350px;
+    left: 340px;
 }
 
 .SITUACAO label{
@@ -163,7 +163,7 @@ h4 {
 .SITUACAO select{
     width: 20%;
     position: relative;
-    left: 115px;
+    left: 110px;
     bottom: 20px;
     border: none;
 }
@@ -226,7 +226,7 @@ h4 {
 .valor {
     position: absolute;
     margin-block: 10px;
-    left: 500px;
+    left: 490px;
     top: 20px;
 }
 
@@ -237,7 +237,7 @@ input[name="dataDeSaida"] {
 .BRL {
     position: absolute;
     margin-block: 10px;
-    left: 500px;
+    left: 482px;
     top: 35px;
     font-weight: bold;
     font-size: medium;
