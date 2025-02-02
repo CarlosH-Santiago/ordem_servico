@@ -1,3 +1,14 @@
+<?php 
+require "../config/conection_db.php";
+include "../src/function_cadastro.php";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  cadastrar();
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -31,25 +42,25 @@
             <button class="login btn btn-outline-warning text-light" onclick="login">Login</button>
             <script>
               function login() {
-                location
+                window.location.href = "login.html";
               }
             </script>
           </div>
 
         <div class="input-form">
           <label for="nome" >Digite seu Nome</label>
-          <input type="text" name="nome" id="nome" placeholder= "Nome"/>
+          <input type="text" name="nome" id="nome" placeholder= "Nome" required/>
 
           <label for="email">Digite seu Email</label>
-          <input type="email" name="email" id="email" placeholder="Email" />
+          <input type="email" name="email" id="email" placeholder="Email" required/>
 
           <label for="senha">Digite sua Senha</label>
-          <input type="password" name="senha" id="senha" placeholder="Senha" />
+          <input type="password" name="senha" id="senha" placeholder="Senha" required/>
           <i class="bi bi-eye" id="btn-showPass" onclick="showPassword()"></i>
           
           
           <label for="senhaConf">Confirme sua Senha</label>
-          <input type="password" name="senhaConf" id="senhaConf" placeholder="Senha" />    
+          <input type="password" name="senhaConf" id="senhaConf" placeholder="Senha" required/>    
           <i class="bi bi-eye" id="btn-showPassConfirm" onclick="showPassConfirm()"></i>
 
           <p id="errorMessage" class="error"></p>

@@ -1,15 +1,9 @@
 <?php
-include "../src/function-image-save.php";
+include "../src/function_save_ordem_servico.php";
 require "../config/conection_db.php";
 
-if (isset($_FILES['deletar'])) {
-  $imagem_id = $GET['deletar'];
-  deletarImagem($osdatabase, $imagem_id);
-}
-
-
-if (isset($_FILES['ativo_image'])) {
-  salvarImagem($osdatabase, $_FILES['ativo_image']);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  salvarOs();
 }
 ?>
 
