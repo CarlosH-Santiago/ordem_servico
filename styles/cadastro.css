@@ -6,9 +6,16 @@ body{
     align-items: center;
     position: relative;
     top: 1vh;
-    background: #202020;
+    background:  linear-gradient(180deg, #00021a, #000000);
     overflow: hidden;
 }
+
+.CVIMG {
+    position: absolute;
+    width: 115vh;
+    z-index: -10;
+}
+
 .top {
     display: flex;
     flex-wrap: wrap;
@@ -22,10 +29,13 @@ body{
 
 .forms {
     width: 50vw;
-    height: 92vh;
+    height: 80vh;
     border: 2px solid #000000;
     border-radius: 10px;
-    background-color: #006eff34;
+    background: linear-gradient(180deg, #006eff34, #000000) ;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .input-form {
@@ -38,16 +48,19 @@ body{
 input {
     border-radius: 30px;
     width: 90%;
-    background-color: #d89400b7;
+    background-color: #d89400;
     padding-block: 5px;
     color: #ffffff; 
     text-indent: 10px;
+    font-weight: bold;
+
 }
 
 input::placeholder {
     position: relative;
     left: 10px;
     color: #ffffff;
+    font-weight: bold;
 }
 
 label {
@@ -70,13 +83,13 @@ i {
     bottom: 20px;
     color: #003b6e;
     margin: -20px;
-  }
-  
+}
+
 i:hover {
     color: #001d36;
-  }
-  
-  .error { 
+}
+
+.error { 
     color: red; 
     position: relative;
     margin:   2px;
