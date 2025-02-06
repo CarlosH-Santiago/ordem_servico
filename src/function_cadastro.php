@@ -13,7 +13,7 @@ function cadastrar() {
     
         $stmt = $osdatabase->prepare("INSERT INTO tb_usuario (nome, email, senha) VALUES (?, ?, ?)");
         if (!$stmt) {
-            die("Erro na preparação da query: " . $conn->error);
+            die("Erro na preparação da query: " . $osdatabase->error);
         }
 
         $stmt->bind_param("sss", $nome, $email, $senha);

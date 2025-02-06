@@ -1,3 +1,15 @@
+<?php 
+require "../config/conection_db.php";
+include "../src/function_login.php";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  logar();
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -25,8 +37,6 @@
           <div class="second-column">
             <h2 class="title-OS">Ordens de Serviço</h2>
             <img src="../assets/image/CVMULTVARIEDADES_SVG 1.svg" width="400" alt="CV MULTIVARIEDADES">
-            
-
           </div>
           <!-- fim second column-->
         </div>

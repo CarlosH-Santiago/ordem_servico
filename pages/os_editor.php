@@ -1,6 +1,7 @@
 <?php
 include "../src/function_save_ordem_servico.php";
 require "../config/conection_db.php";
+require "../src/session_verify.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   salvarOs();

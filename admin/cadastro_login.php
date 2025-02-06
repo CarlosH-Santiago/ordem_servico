@@ -1,11 +1,15 @@
 <?php 
 require "../config/conection_db.php";
 include "../src/function_cadastro.php";
+include "../src/function_login.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   cadastrar();
 }
 
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  logar();
+}
 
 ?>
 
