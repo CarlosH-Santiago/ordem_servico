@@ -1,3 +1,16 @@
+<?php 
+require "../config/conection_db.php";
+include "../src/function_cadastro.php";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  cadastrar();
+}
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -9,9 +22,9 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-    <link rel="stylesheet" href="../styles/cadastro_login.css" />
+    <link rel="stylesheet" href="../styles/cadastro__login.css" />
   </head>
-  <body class="cadastro-js">
+  <body class="">
     <div class="contain">
       <div class="content">
         <div class="first-content">
@@ -25,27 +38,11 @@
           <div class="second-column">
             <h2 class="title-b">Crie sua Conta</h2>
             <div class="social-midia">
-              <ul class="list-social-midia">
-                <a class="link-social-midia" href="#">
-                  <li class="item-social-midia">
-                    <i class="bi bi-facebook"></i>
-                  </li>
-                </a>
-                <a class="link-social-midia" href="#">
-                  <li class="item-social-midia">
-                    <i class="bi bi-google"></i>
-                  </li>
-                </a>
-                <a class="link-social-midia" href="#">
-                  <li class="item-social-midia">
-                    <i class="bi bi-linkedin"></i>
-                  </li>
-                </a>
-              </ul>
+              <img src="../assets/image/CV MULTIVARIEDADES_COLOR_2.png" width="100" alt="CV MULTIVARIEDADES">
             </div>
             <!-- fim social midia-->
             <p class="descricao-second">Use seu email para se cadastrar</p>
-            <form action="" method="post" class="form">
+            <form action="" method="post" id="cadastroForm" class="form">
               <label class="label-input" for="cadNome">
                 <i class="bi bi-person icon-modify"></i>
                 <input
@@ -72,15 +69,17 @@
                   id="cadSenha"
                   placeholder="Senha"
                 />
+                <i class="bi bi-eye" id="btn-showPass" onclick="showPassword()"></i>
               </label>
               <label class="label-input" for="cadSenhaConf">
                 <i class="bi bi-lock icon-modify"></i>
                 <input
                   type="password"
-                  name="casSenhaConf"
+                  name="cadSenhaConf"
                   id="cadSenhaConf"
                   placeholder="Confirme a Senha"
                 />
+                <i class="bi bi-eye" id="btn-showPassConfirm" onclick="showPassConfirm()"></i>
               </label>
 
               <button type="submit" class="button button-second">
@@ -103,23 +102,7 @@
           <div class="second-column">
             <h2 class="title-b">Logando Conta</h2>
             <div class="social-midia">
-              <ul class="list-social-midia">
-                <a class="link-social-midia" href="#">
-                  <li class="item-social-midia">
-                    <i class="bi bi-facebook"></i>
-                  </li>
-                </a>
-                <a class="link-social-midia" href="#">
-                  <li class="item-social-midia">
-                    <i class="bi bi-google"></i>
-                  </li>
-                </a>
-                <a class="link-social-midia" href="#">
-                  <li class="item-social-midia">
-                    <i class="bi bi-linkedin"></i>
-                  </li>
-                </a>
-              </ul>
+                    <img src="../assets/image/CV MULTIVARIEDADES_COLOR_2.png" width="200" alt="CV MULTIVARIEDADES">
             </div>
             <!-- fim social midia-->
             <p class="descricao-second"></p>
@@ -141,6 +124,7 @@
                   id="logSenha"
                   placeholder="Senha"
                 />
+                <i class="bi bi-eye" id="btn-showPass" onclick="showPasswordL()"></i>
               </label>
 
               <a href="#" class="password">Esqueceu sua senha?</a>
@@ -156,5 +140,7 @@
     <!-- fim  container-->
   </body>
   <script src="../library/bootstrap.bundle.min.js"></script>
-  <script src="../src/cadastro_login_animation.js"></script>
+  <script src="../src/cadastro_login-animation.js"></script>
+  <script src="../src/function_confirm_pass.js"></script>
+  <script src="../src/function_show_password.js"></script>
 </html>

@@ -5,11 +5,11 @@ function cadastrar() {
     require "../config/conection_db.php";
 
     
-    if(isset($_POST['nome']) || isset($_POST['email']) || isset($_POST['senha'])) {
+    if(isset($_POST['cadNome']) || isset($_POST['cadEmail']) || isset($_POST['cadSenha'])) {
     
-        $nome = $_POST['nome'];
-        $email = $_POST['email'];
-        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+        $nome = $_POST['cadNome'];
+        $email = $_POST['cadEmail'];
+        $senha = password_hash($_POST['cadSenha'], PASSWORD_DEFAULT);
     
         $stmt = $osdatabase->prepare("INSERT INTO tb_usuario (nome, email, senha) VALUES (?, ?, ?)");
         if (!$stmt) {
