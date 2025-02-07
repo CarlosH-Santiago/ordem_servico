@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Header</title>
-    <link rel="stylesheet" href="../assets/library/bootstrap.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-    <link rel="stylesheet" href="../styles/header.css">
-  </head>
-  <body>
-    <header>
+
       <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
@@ -101,8 +87,5 @@
           </div>
         </div>
       </nav>
-    </header>
-    <script src="../assets/library/bootstrap.bundle.min.js"></script>
 
-  </body>
-</html>
+
