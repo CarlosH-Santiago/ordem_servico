@@ -4,7 +4,7 @@ require "../config/conection_db.php";
 //require "../src/session_verify.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  editarOs();
+  criarOs();
 }
 ?>
 
@@ -14,11 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Criar ordem de serviço</title>
+  <title>Editor de ordem de serviço</title>
   <link rel="stylesheet" href="../assets/library/bootstrap.min.css" />
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
   <link rel="stylesheet" href="../styles/ordem_servico_editor.css" />
 </head>
 
@@ -33,10 +34,9 @@ include "../components/header.php";
 
   <main>
     <form enctype="multipart/form-data" action="" method="post" id="osForm">
-    <input type="hidden" name="os_id" value="<?=$os['os_id']?>">
       <div class="imagem">
         <div class="image-preview" id="image-preview">
-          <img id="previewImage" alt="" src=""/>
+          <img id="previewImage" alt="" />
         </div>
         <label class="ativo_image_input" for="ativo_image"><i class="bi bi-image"></i></label>
         <input id="ativo_image" type="file" name="ativo_image" />
@@ -92,7 +92,6 @@ include "../components/header.php";
             type="text"
             name="nomeCliente"
             id="id_nome"
-            value="<?= $_POST[''] ?? '' ?>" 
             required />
           <label class="b" id="cpfcnpjCliente" for="cpfCnpj">CPF/CNPJ</label>
           <input
@@ -227,7 +226,7 @@ include "../components/header.php";
           <option value="finalizada">Finalizada</option>
         </select>
         </div>
-      <button type="submit" name="update_os">Salvar</button>
+      <button type="submit" name="create_os">Salvar</button>
 
       </div>
     </form>
