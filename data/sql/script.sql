@@ -1,8 +1,5 @@
 create database if not exists db_ordemservico;
 
--- drop database db_ordemservico; --
-
-
 use db_ordemservico;
 
 create table if not exists tb_usuario (

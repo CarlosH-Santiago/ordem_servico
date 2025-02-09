@@ -45,8 +45,9 @@ main {
 .table td {
   background-color: #ffecb2;
   color: #000000;
-  font-size: 13px;
 }
+
+
 
 .button-primary {
   background-color: #ffd000;

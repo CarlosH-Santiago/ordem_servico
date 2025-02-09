@@ -262,5 +262,7 @@ function editarOs() {
     $osdatabase->rollback();
 
     }
+    header('Location: index.php');
+    exit;
 
 }
