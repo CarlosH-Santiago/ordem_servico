@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <link rel="stylesheet" href="../styles/ordem_servico_editor.css" />
+  <link rel="stylesheet" href="../styles/os_doc.css" />
 </head>
 
 <body>
@@ -32,11 +32,12 @@ include "../components/header.php";
   <section class="cvimage"><img src="../assets/image/CV MULTIVARIEDADES_COLOR.png" alt="cvmulitivariedades"></section>
 
   <main>
+    
     <form enctype="multipart/form-data" action="" method="post" id="osForm">
-    <input type="hidden" name="os_id" value="<?=$os['os_id']?>">
+    <input type="hidden" name="os_id" value="<?=$os['os_id'];?>">
       <div class="imagem">
         <div class="image-preview" id="image-preview">
-          <img id="previewImage" alt="" src=""/>
+        <img id="previewImage" alt="<?= $os[''] ;?>" src="<?= $os[''] ;?>" />
         </div>
         <label class="ativo_image_input" for="ativo_image"><i class="bi bi-image"></i></label>
         <input id="ativo_image" type="file" name="ativo_image" />
@@ -164,14 +165,14 @@ include "../components/header.php";
 
         <div class="input-group SERVICO row mx-1">
           <h4>Informações do Serviço</h4>
-          <label class="a" id="chegada" for="horarioDeChegada">Horário de Chegada</label>
+          <label class="a" id="chegada" for="dataDeChegada">Data de Chegada</label>
           <input
             class="left"
             type="date"
             name="dataDeChegada"
             id="id_data_chegada"
             />
-          <label class="b" id="saida" for="horarioDeSaida">Horário de Saída</label>
+          <label class="b" id="saida" for="dataDeSaida">Data de Saída</label>
           <input
             class="right"
             type="date"

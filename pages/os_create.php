@@ -14,13 +14,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Editor de ordem de serviço</title>
+  <title>Criar - Ordem de serviço</title>
   <link rel="stylesheet" href="../assets/library/bootstrap.min.css" />
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
-  <link rel="stylesheet" href="../styles/ordem_servico_editor.css" />
+  <link rel="stylesheet" href="../styles/os_doc.css" />
 </head>
 
 <body>
@@ -163,22 +163,21 @@ include "../components/header.php";
 
         <div class="input-group SERVICO row mx-1">
           <h4>Informações do Serviço</h4>
-          <label class="a" id="chegada" for="horarioDeChegada">Horário de Chegada</label>
+          <label class="a" id="chegada" for="dataDeChegada">Data de Chegada</label>
           <input
             class="left"
             type="date"
             name="dataDeChegada"
             id="id_data_chegada"
             />
-          <label class="b" id="saida" for="horarioDeSaida">Horário de Saída</label>
+          <label class="b" id="saida" for="dataDeSaida">Data de Saída</label>
           <input
             class="right"
             type="date"
             name="dataDeSaida"
             id="id_data_chegada"
           />
-          <label class="valor" for="valor">Valor</label>
-          <p class="BRL">R$</p>
+          <label class="valor" for="valor">Valor R$</label>
           <input type="text" id="valor" class="currency" placeholder="0,00" />
           <label id="servico" for="servico">Serviço Realizado</label>
           <textarea

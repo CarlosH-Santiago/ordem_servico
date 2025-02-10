@@ -60,7 +60,7 @@ main {
     display: flex;
     border: 2px dashed #ccc;
     border-radius: 10px;
-    width: 100px;
+    width: 175px;
     height: 100px;
     justify-content: center;
     align-items: center;
@@ -70,9 +70,9 @@ main {
 }
 
 .image-preview img {
-    min-width: 50px;
-    max-height: 50px;
-    max-width: 100px;
+    min-width: 80px;
+    max-height: 80px;
+    max-width: 175px;
     max-height: 100px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -100,8 +100,8 @@ input[type="file"] {
 }
 
 .cvImage {
-    position: relative;
-    left: 330px;
+    position: absolute;
+    left: 465px;
 }
 
 #doc-label {
@@ -210,9 +210,8 @@ h4 {
 
 .UF {
     position: absolute;
-    margin-block: 10px;
-    left: 518px;
-    top: 62px;
+    left: 508px;
+    top: 72px;
 }
 
 #UF-i {
@@ -226,12 +225,12 @@ h4 {
 .valor {
     position: absolute;
     margin-block: 10px;
-    left: 490px;
+    left: 465px;
     top: 20px;
 }
 
 input[name="dataDeSaida"] {
-    width: 36.5%;
+    width: 30.5%;
 }
 
 .BRL {
@@ -244,7 +243,7 @@ input[name="dataDeSaida"] {
 }
 
 #valor {
-    width: 12%;
+    width: 18%;
     padding-left: 4%;
 }
 
@@ -274,6 +273,14 @@ button[type="submit"] {
     margin-top: 3px;
     font-size: 18px;
 }
+
 button[type="submit"]:hover {
     background: #0066ff;
+}
+
+.not_btn {
+    padding: 8px;
+    position: relative;
+    left: 2.5px;
+    background: transparent;
 }

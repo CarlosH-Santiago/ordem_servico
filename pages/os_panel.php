@@ -15,12 +15,15 @@ require "../config/conection_db.php";
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <link rel="stylesheet" type="text/css" href="../styles/os_panel_new.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="../styles/panel.css" />
 </head>
 
 <body>
   <header>
-
+  <?php 
+include "../components/header.php";
+?>
   </header>
 
   <main>
@@ -33,7 +36,7 @@ require "../config/conection_db.php";
             <a href="os_create.php" class="btn button-primary btn-sm float-end">Criar Ordem</a>
           </div> <!-- Fim card header-->
           <div class="card-body  OrdemServico-bgb">
-            <table class="table table-bordered table-striped">
+            <table id="painel_table" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -57,14 +60,14 @@ require "../config/conection_db.php";
                     <tr>
                       <td><?= $OrdemServico['os_id']; ?></td>
                       <td><?= $OrdemServico['nome_cliente']; ?></td>
-                      <td><?= $OrdemServico['endereco'] . ", " . $OrdemServico['bairro']; ?></td>
+                      <td><?= $OrdemServico['endereco'] . ", " . $OrdemServico['bairro'] . ", " . $OrdemServico['cidade']; ?></td>
                       <td><?= $OrdemServico['nome_ativo']; ?></td>
                       <td><?= $OrdemServico['patrimonio']; ?></td>
                       <td><?= date('d/m/Y', strtotime($OrdemServico['data_chegada'])); ?></td>
                       <td><?= $OrdemServico['situacao']; ?></td>
                       <td>
-                        <a href="os-view.php?id=<?= $OrdemServico['os_id']; ?>" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i> Vizualizar</a>
-                        <a href="os_editor.php?id=<?= $OrdemServico['os_id']; ?>" class="btn btn-success btn-sm"><i class="bi bi-pencil-square"></i> Editar</a>
+                        <a href="os_view.php?os_id=<?= $OrdemServico['os_id']; ?>" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i> Vizualizar</a>
+                        <a href="os_editor.php?os_id=<?= $OrdemServico['os_id']; ?>" class="btn btn-success btn-sm"><i class="bi bi-pencil-square"></i> Editar</a>
                         <form action="acoes.php" method="POST" class="d-inline">
                           <button onclick="return confirm('Tem certexa que deseja excluir?')" type="submit" name="delete_usuario" value="<?= $OrdemServico['os_id']; ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</button>
                         </form>
@@ -87,6 +90,25 @@ require "../config/conection_db.php";
     </div>
   </main>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+
+<script>
+  $(document).ready( function () {
+    $('#painel_table').DataTable( {
+    language: {
+        info: 'Exibindo Páginas _PAGE_ De _PAGES_',
+        infoEmpty: 'Sem Registros disponíveis',
+        infoFiltered: '(Filtrando de _MAX_ registros totais)',
+        lengthMenu: 'Mostrar _MENU_ Registros por página',
+        zeroRecords: 'Não encontrado - desculpe',
+        
+    }
+});
+} );
+</script>
+
 <script src="../assets/library/bootstrap.bundle.min.js"></script>
+
 
 </html>
