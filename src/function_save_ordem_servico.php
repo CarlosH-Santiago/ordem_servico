@@ -1,9 +1,10 @@
 <?php
 require "../config/conection_db.php";
 
-function criarOs() {
+function criarOs()
+{
     require "../config/conection_db.php";
-        
+
     //obtendo dados do formulario
     //obtendo dados da empresa
     $nomeEmpresa = isset($_POST['nomeEmpresa']) ? $_POST['nomeEmpresa'] : '';
@@ -68,56 +69,56 @@ function criarOs() {
         }
 
 
-    //inserções do cliente
+        //inserções do cliente
         $stmt = $osdatabase->prepare("INSERT INTO tb_cliente (nome, cpf_cnpj, email, telefone) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $nomeCliente, $cpf_cnpjCliente, $emailCliente, $celularCliente);
         $stmt->execute();
         $cliente_id = $osdatabase->insert_id;
         $stmt->close();
 
-    //incerções local
+        //incerções local
         $stmt = $osdatabase->prepare("INSERT INTO tb_endereco (endereco, bairro, cidade, cep, uf, cliente_id) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssss", $endereco, $bairro, $cidade, $CEP, $UF, $cliente_id);
         $stmt->execute();
         $endereco_id = $osdatabase->insert_id;
         $stmt->close();
 
-    //inserções do ativo
+        //inserções do ativo
         $stmt = $osdatabase->prepare("INSERT INTO tb_ativo (nome, marca, modelo, patrimonio, cliente_id) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sssss", $nomeAtivo, $marca, $modelo, $patrimonio, $cliente_id);
         $stmt->execute();
         $ativo_id = $osdatabase->insert_id;
         $stmt->close();
 
-    //Inserções do serviço
+        //Inserções do serviço
         $stmt = $osdatabase->prepare("INSERT INTO tb_ordem_servico (empresa_id, cliente_id, ativo_id, situacao, data_chegada, data_saida, servico, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssss", $empresa_id, $cliente_id, $ativo_id, $situacao, $dataChegada, $dataSaida, $servico, $valor);
         $stmt->execute();
         $os_id = $osdatabase->insert_id;
         $stmt->close();
 
-    //Incerção da imagem
-            //validação do formulario
-            if(isset($_FILES['ativo_image'])) {
+        //Incerção da imagem
+        //validação do formulario
+        if (isset($_FILES['ativo_image'])) {
             $ativoImage = $_FILES['ativo_image'];
-            if($ativoImage['error'])
-            die("Falha ao enviar a imagem do ativo");
-            if($ativoImage['size'] > 3145728)
-            die("Arquivo muito grande! Maximo suportado é: 3MB");
+            if ($ativoImage['error'])
+                die("Falha ao enviar a imagem do ativo");
+            if ($ativoImage['size'] > 3145728)
+                die("Arquivo muito grande! Maximo suportado é: 3MB");
 
             //definindo variaveis de separação de campo
             $pasta = "../../../storage/ordem_servico/ativo-image/";
             $nomeDoArquivo = $ativoImage['name'];
             $nomeNovoDoArquivo = uniqid();
             $extensaoDoArquivo = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-            $caminho = $pasta.$nomeNovoDoArquivo.".". $extensaoDoArquivo;
+            $caminho = $pasta . $nomeNovoDoArquivo . "." . $extensaoDoArquivo;
 
-            if($extensaoDoArquivo != "jpg" && $extensaoDoArquivo != 'png' && $extensaoDoArquivo != 'jpeg') 
-            die ("Tipo de arquivo não aceito");
+            if ($extensaoDoArquivo != "jpg" && $extensaoDoArquivo != 'png' && $extensaoDoArquivo != 'jpeg')
+                die("Tipo de arquivo não aceito");
 
             //movendo arquivos para a pasta e o banco de dados
             $moverArquivo = move_uploaded_file($ativoImage["tmp_name"], $caminho);
-            if($moverArquivo == true ) {
+            if ($moverArquivo == true) {
                 $osdatabase->query("INSERT INTO tb_image_ativo (nome, caminho, ativo_id) 
                 VALUES ('$nomeNovoDoArquivo', '$caminho', $ativo_id)") or die($osdatabase->error);
             } else {
@@ -125,18 +126,18 @@ function criarOs() {
             }
         }
 
-            $osdatabase->commit();
-
+        $osdatabase->commit();
     } catch (Exception $e) {
-    $osdatabase->rollback();
-
+        $osdatabase->rollback();
     }
-
+    header('Location: os_panel.php');
+    exit;
 }
 
-function editarOs() {
+function editarOs()
+{
     require "../config/conection_db.php";
-        
+
     //obtendo dados do formulario
     //obtendo dados da empresa
     $nomeEmpresa = isset($_POST['nomeEmpresa']) ? $_POST['nomeEmpresa'] : '';
@@ -172,7 +173,10 @@ function editarOs() {
 
     //fazendo as inserções no banco de dados
     try {
-        $osdatabase->begin_transaction();
+
+        $sql = "SELECT * FROM ordem_servico_doc WHERE os_id = $os_id";
+        $query = mysqli_query($osdatabase, $sql);
+
 
         // Verificar se a empresa já existe
         $stmt = $osdatabase->prepare("SELECT empresa_id FROM tb_empresa_responsavel WHERE cnpj = ?");
@@ -186,7 +190,7 @@ function editarOs() {
             $stmt->close();
         } else {
             $stmt->close();
-            $stmt = $osdatabase->prepare("INSERT INTO tb_empresa_responsavel (nome_fantasia, cnpj, email, telefone) VALUES (?, ?, ?, ?)");
+            $stmt = $osdatabase->prepare("UPDATE tb_empresa_responsavel SET nome_fantasia = ? , cnpj = ? , email = ? , telefone = ?  WHERE ");
             if (!$stmt) {
                 die("Erro na preparação: " . $osdatabase->error);
             }
@@ -199,70 +203,67 @@ function editarOs() {
         }
 
 
-    //inserções do cliente
-        $stmt = $osdatabase->prepare("INSERT INTO tb_cliente (nome, cpf_cnpj, email, telefone) VALUES (?, ?, ?, ?)");
+        //inserções do cliente
+        $stmt = $osdatabase->prepare("UPDATE tb_cliente SET nome = ?, cpf_cnpj = ?, email = ?, telefone = ?");
         $stmt->bind_param("ssss", $nomeCliente, $cpf_cnpjCliente, $emailCliente, $celularCliente);
         $stmt->execute();
         $cliente_id = $osdatabase->insert_id;
         $stmt->close();
 
-    //incerções local
-        $stmt = $osdatabase->prepare("INSERT INTO tb_endereco (endereco, bairro, cidade, cep, uf, cliente_id) VALUES (?, ?, ?, ?, ?, ?)");
+        //incerções local
+        $stmt = $osdatabase->prepare("UPDATE tb_endereco SET endereco = ?, bairro = ?, cidade = ?, cep = ?, uf = ?, cliente_id = ?");
         $stmt->bind_param("ssssss", $endereco, $bairro, $cidade, $CEP, $UF, $cliente_id);
         $stmt->execute();
         $endereco_id = $osdatabase->insert_id;
         $stmt->close();
 
-    //inserções do ativo
-        $stmt = $osdatabase->prepare("INSERT INTO tb_ativo (nome, marca, modelo, patrimonio, cliente_id) VALUES (?, ?, ?, ?, ?)");
+        //inserções do ativo
+        $stmt = $osdatabase->prepare("UPDATE tb_ativo SET nome = ?, marca = ?, modelo = ?, patrimonio = ?, cliente_id = ?");
         $stmt->bind_param("sssss", $nomeAtivo, $marca, $modelo, $patrimonio, $cliente_id);
         $stmt->execute();
         $ativo_id = $osdatabase->insert_id;
         $stmt->close();
 
-    //Inserções do serviço
-        $stmt = $osdatabase->prepare("INSERT INTO tb_ordem_servico (empresa_id, cliente_id, ativo_id, situacao, data_chegada, data_saida, servico, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        //Inserções do serviço
+        $stmt = $osdatabase->prepare("UPDATE tb_ordem_servico SET empresa_id = ?, cliente_id = ?, ativo_id = ?, situacao = ?, data_chegada = ?, data_saida = ?, servico = ?, valor = ?");
         $stmt->bind_param("ssssssss", $empresa_id, $cliente_id, $ativo_id, $situacao, $dataChegada, $dataSaida, $servico, $valor);
         $stmt->execute();
         $os_id = $osdatabase->insert_id;
         $stmt->close();
 
-    //Incerção da imagem
-            //validação do formulario
-            if(isset($_FILES['ativo_image'])) {
+        //Incerção da imagem
+        //validação do formulario
+        if (isset($_FILES['ativo_image'])) {
             $ativoImage = $_FILES['ativo_image'];
-            if($ativoImage['error'])
-            die("Falha ao enviar a imagem do ativo");
-            if($ativoImage['size'] > 3145728)
-            die("Arquivo muito grande! Maximo suportado é: 3MB");
+            if ($ativoImage['error'])
+                die("Falha ao enviar a imagem do ativo");
+            if ($ativoImage['size'] > 3145728)
+                die("Arquivo muito grande! Maximo suportado é: 3MB");
 
             //definindo variaveis de separação de campo
             $pasta = "../../../storage/ordem_servico/ativo-image/";
             $nomeDoArquivo = $ativoImage['name'];
             $nomeNovoDoArquivo = uniqid();
             $extensaoDoArquivo = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-            $caminho = $pasta.$nomeNovoDoArquivo.".". $extensaoDoArquivo;
+            $caminho = $pasta . $nomeNovoDoArquivo . "." . $extensaoDoArquivo;
 
-            if($extensaoDoArquivo != "jpg" && $extensaoDoArquivo != 'png' && $extensaoDoArquivo != 'jpeg') 
-            die ("Tipo de arquivo não aceito");
+            if ($extensaoDoArquivo != "jpg" && $extensaoDoArquivo != 'png' && $extensaoDoArquivo != 'jpeg')
+                die("Tipo de arquivo não aceito");
 
             //movendo arquivos para a pasta e o banco de dados
             $moverArquivo = move_uploaded_file($ativoImage["tmp_name"], $caminho);
-            if($moverArquivo == true ) {
-                $osdatabase->query("INSERT INTO tb_image_ativo (nome, caminho, ativo_id) 
-                VALUES ('$nomeNovoDoArquivo', '$caminho', $ativo_id)") or die($osdatabase->error);
+            if ($moverArquivo == true) {
+                $osdatabase->query("UPDATE tb_image_ativo SET nome = '$nomeNovoDoArquivo', caminho = '$caminho', ativo_id ='$ativo_id'")
+                    or die($osdatabase->error);
             } else {
                 echo "<p>Erro ao enviar a imagem do ativo</p>";
             }
         }
 
-            $osdatabase->commit();
-
+        $osdatabase->commit();
     } catch (Exception $e) {
-    $osdatabase->rollback();
-
+        $osdatabase->rollback();
     }
-    header('Location: index.php');
+    header('Location: os_panel.php');
     exit;
-
 }

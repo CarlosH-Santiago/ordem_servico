@@ -17,7 +17,7 @@ require "../config/conection_db.php";
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-    <link rel="stylesheet" href="../styles/os_doc.css" />
+    <link rel="stylesheet" href="../styles/os_docs.css" />
 </head>
 
 <body>
@@ -90,7 +90,7 @@ require "../config/conection_db.php";
                                 placeholder="Ex.: +55 (75) 90000-0000"
                                 pattern="\(\d{2}\) 9\d{4}-\d{4}"
                                 readonly
-                                value="<?= $ordem_servico['telefoneEmpresa'] ?? '' ?>"/>
+                                value="<?= $ordem_servico['telefoneEmpresa'] ?? '' ?>" />
                         </div>
 
                         <div class="input-group CLIENTE row mx-1">
@@ -192,7 +192,7 @@ require "../config/conection_db.php";
                                 type="date"
                                 name="dataDeChegada"
                                 readonly
-                                value="<?=$ordem_servico['data_chegada']?>"
+                                value="<?= $ordem_servico['data_chegada'] ?>"
                                 id="id_data_chegada" />
                             <label class="b" id="saida" for="horarioDeSaida">Data de Saída</label>
                             <input
@@ -200,11 +200,11 @@ require "../config/conection_db.php";
                                 type="date"
                                 name="dataDeSaida"
                                 readonly
-                                value="<?=$ordem_servico['data_saida']?? '' ;?>"
+                                value="<?= $ordem_servico['data_saida'] ?? ''; ?>"
                                 id="id_data_chegada" />
                             <label class="valor" for="valor">Valor R$</label>
                             <input type="text" id="valor" class="currency" placeholder="0,00" readonly
-                            value="<?= $ordem_servico['valor'] ?? '' ?>"/>
+                                value="<?= $ordem_servico['valor'] ?? '' ?>" />
                             <label id="servico" for="servico">Serviço Realizado</label>
                             <textarea
                                 class="textarea"

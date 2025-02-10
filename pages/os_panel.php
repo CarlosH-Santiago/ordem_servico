@@ -1,6 +1,7 @@
 <?php
 
 require "../config/conection_db.php";
+//require "../src/session_verify.php";
 
 ?>
 
@@ -15,15 +16,15 @@ require "../config/conection_db.php";
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="../styles/panel.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+  <link rel="stylesheet" type="text/css" href="../styles/panel.css" />
 </head>
 
 <body>
   <header>
-  <?php 
-include "../components/header.php";
-?>
+    <?php
+    include "../components/header.php";
+    ?>
   </header>
 
   <main>
@@ -56,7 +57,7 @@ include "../components/header.php";
                 if (mysqli_num_rows($OrdemServicos) > 0) {
                   foreach ($OrdemServicos as $OrdemServico) {
 
-                ?>  
+                ?>
                     <tr>
                       <td><?= $OrdemServico['os_id']; ?></td>
                       <td><?= $OrdemServico['nome_cliente']; ?></td>
@@ -94,18 +95,18 @@ include "../components/header.php";
 <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
 
 <script>
-  $(document).ready( function () {
-    $('#painel_table').DataTable( {
-    language: {
+  $(document).ready(function() {
+    $('#painel_table').DataTable({
+      language: {
         info: 'Exibindo Páginas _PAGE_ De _PAGES_',
         infoEmpty: 'Sem Registros disponíveis',
         infoFiltered: '(Filtrando de _MAX_ registros totais)',
         lengthMenu: 'Mostrar _MENU_ Registros por página',
         zeroRecords: 'Não encontrado - desculpe',
-        
-    }
-});
-} );
+
+      }
+    });
+  });
 </script>
 
 <script src="../assets/library/bootstrap.bundle.min.js"></script>

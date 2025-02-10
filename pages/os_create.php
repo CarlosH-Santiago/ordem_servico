@@ -20,14 +20,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
-  <link rel="stylesheet" href="../styles/os_doc.css" />
+  <link rel="stylesheet" href="../styles/os_docs.css" />
 </head>
 
 <body>
   <header>
-<?php 
-include "../components/header.php";
-?>
+    <?php
+    include "../components/header.php";
+    ?>
   </header>
 
   <section class="cvimage"><img src="../assets/image/CV MULTIVARIEDADES_COLOR.png" alt="cvmulitivariedades"></section>
@@ -168,15 +168,13 @@ include "../components/header.php";
             class="left"
             type="date"
             name="dataDeChegada"
-            id="id_data_chegada"
-            />
+            id="id_data_chegada" />
           <label class="b" id="saida" for="dataDeSaida">Data de Saída</label>
           <input
             class="right"
             type="date"
             name="dataDeSaida"
-            id="id_data_chegada"
-          />
+            id="id_data_chegada" />
           <label class="valor" for="valor">Valor R$</label>
           <input type="text" id="valor" class="currency" placeholder="0,00" />
           <label id="servico" for="servico">Serviço Realizado</label>
@@ -219,13 +217,13 @@ include "../components/header.php";
         </div>
         <div class="input-group SITUACAO row mx-1">
 
-        <label for="situacao">Situação da OS:</label>
-        <select name="situacao" id="situacao">
-          <option value="pendente">Pendente</option>
-          <option value="finalizada">Finalizada</option>
-        </select>
+          <label for="situacao">Situação da OS:</label>
+          <select name="situacao" id="situacao">
+            <option value="pendente">Pendente</option>
+            <option value="finalizada">Finalizada</option>
+          </select>
         </div>
-      <button type="submit" name="create_os">Salvar</button>
+        <button type="submit" name="create_os">Salvar</button>
 
       </div>
     </form>
