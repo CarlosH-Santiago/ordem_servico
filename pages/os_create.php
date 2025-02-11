@@ -224,6 +224,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           </select>
         </div>
         <button type="submit" name="create_os">Salvar</button>
+        <button onclick="return location.href='os_panel.php'" class="btn btn-danger btn-sm mx-1" type="cancel" name="cancel_edit">Cancelar</button>
+
 
       </div>
     </form>

@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_os'])) {
         $stmt->close();
 
         $osdatabase->commit(); // Confirma a exclusão
-        header("Location: os_panel.php?msg=excluido"); // Redireciona com mensagem de sucesso
+        header("Location: os_panel.php?"); // Redireciona com mensagem de sucesso
         exit;
     } catch (Exception $e) {
         $osdatabase->rollback(); // Reverte alterações em caso de erro
