@@ -69,9 +69,13 @@ require "../config/conection_db.php";
                       <td>
                         <a href="os_view.php?os_id=<?= $OrdemServico['os_id']; ?>" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i> Vizualizar</a>
                         <a href="os_editor.php?os_id=<?= $OrdemServico['os_id']; ?>" class="btn btn-success btn-sm"><i class="bi bi-pencil-square"></i> Editar</a>
-                        <form action="acoes.php" method="POST" class="d-inline">
-                          <button onclick="return confirm('Tem certexa que deseja excluir?')" type="submit" name="delete_usuario" value="<?= $OrdemServico['os_id']; ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</button>
+                        <form action="../src/excluir_ordem.php" method="POST" class="d-inline">
+                          <input type="hidden" name="delete_os" value="<?= $OrdemServico['os_id']; ?>">
+                          <button onclick="return confirm('Tem certeza que deseja excluir esta Ordem de Serviço?')" type="submit" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Excluir
+                          </button>
                         </form>
+
                       </td>
                     </tr>
                 <?php

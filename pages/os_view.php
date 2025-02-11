@@ -1,5 +1,4 @@
 <?php
-include "../src/function_save_ordem_servico.php";
 require "../config/conection_db.php";
 //require "../src/session_verify.php";
 
@@ -63,7 +62,7 @@ require "../config/conection_db.php";
                                 name="nomeEmpresa"
                                 id="id_nome"
                                 readonly
-                                value="<?= $ordem_servico['nome_fantasia'] ?? '' ?>" />
+                                value="<?= $ordem_servico['empresa_nome'] ?? '' ?>" />
                             <label class="b" id="cnpjEmpresa" for="cnpjEmpresa">CNPJ</label>
                             <input
                                 class="right"
@@ -80,7 +79,7 @@ require "../config/conection_db.php";
                                 id="id_email"
                                 placeholder="exemple@email.com"
                                 readonly
-                                value="<?= $ordem_servico['emailEmpresa'] ?? '' ?>" />
+                                value="<?= $ordem_servico['empresa_email'] ?? '' ?>" />
                             <label class="d" id="celularEmpresa" for="celular">Celular/Whatsapp</label>
                             <input
                                 class="right"
@@ -90,7 +89,7 @@ require "../config/conection_db.php";
                                 placeholder="Ex.: +55 (75) 90000-0000"
                                 pattern="\(\d{2}\) 9\d{4}-\d{4}"
                                 readonly
-                                value="<?= $ordem_servico['telefoneEmpresa'] ?? '' ?>" />
+                                value="<?= $ordem_servico['empresa_telefone'] ?? '' ?>" />
                         </div>
 
                         <div class="input-group CLIENTE row mx-1">
@@ -102,7 +101,7 @@ require "../config/conection_db.php";
                                 name="nomeCliente"
                                 id="id_nome"
                                 readonly
-                                value="<?= $ordem_servico['nomeCliente'] ?? '' ?>"
+                                value="<?= $ordem_servico['cliente_nome'] ?? '' ?>"
                                 required />
                             <label class="b" id="cpfcnpjCliente" for="cpfCnpj">CPF/CNPJ</label>
                             <input
@@ -121,7 +120,7 @@ require "../config/conection_db.php";
                                 id="id_email"
                                 placeholder="exemple@email.com"
                                 readonly
-                                value="<?= $ordem_servico['emailCliente'] ?? '' ?>" />
+                                value="<?= $ordem_servico['cliente_email'] ?? '' ?>" />
                             <label class="d" id="celularCliente" for="celular">Celular/Whatsapp</label>
                             <input
                                 class="right"
@@ -131,7 +130,7 @@ require "../config/conection_db.php";
                                 placeholder="Ex.: (75) 90000-0000"
                                 pattern="\(\d{2}\) 9\d{4}-\d{4}"
                                 readonly
-                                value="<?= $ordem_servico['telefoneCliente'] ?? '' ?>"
+                                value="<?= $ordem_servico['cliente_telefone'] ?? '' ?>"
                                 required />
                         </div>
 
@@ -222,7 +221,7 @@ require "../config/conection_db.php";
                                 name="nomeAtivo"
                                 id="id_ativo"
                                 readonly
-                                value="<?= $ordem_servico['nome_ativo'] ?? '' ?>" />
+                                value="<?= $ordem_servico['ativo_nome'] ?? '' ?>" />
                             <label class="b" id="2" for="nome">Marca</label>
                             <input
                                 class="right"

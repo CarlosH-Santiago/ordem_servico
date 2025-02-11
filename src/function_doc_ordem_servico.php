@@ -140,130 +140,190 @@ function editarOs()
 
     //obtendo dados do formulario
     //obtendo dados da empresa
+    $empresa_id = isset($_POST['empresa_id']) ? $_POST['empresa_id'] : '';
     $nomeEmpresa = isset($_POST['nomeEmpresa']) ? $_POST['nomeEmpresa'] : '';
     $cnpjEmpresa = isset($_POST['cnpjEmpresa']) ? $_POST['cnpjEmpresa'] : '';
     $emailEmpresa = isset($_POST['emailEmpresa']) ? $_POST['emailEmpresa'] : '';
     $celularEmpresa = isset($_POST['celularEmpresa']) ? $_POST['celularEmpresa'] : '';
-
+    
     //obtendo dados do cliente
+    $cliente_id = isset($_POST['cliente_id']) ? $_POST['cliente_id'] : '';
     $nomeCliente = isset($_POST['nomeCliente']) ? $_POST['nomeCliente'] : '';
     $cpf_cnpjCliente = isset($_POST['cpfCnpj']) ? $_POST['cpfCnpj'] : '';
     $emailCliente = isset($_POST['emailCliente']) ? $_POST['emailCliente'] : '';
     $celularCliente = isset($_POST['celularCliente']) ? $_POST['celularCliente'] : '';
-
+    
     //obtendo dados do local do cliente
+    $endereco_id = isset($_POST['endereco_id']) ? $_POST['endereco_id'] : '';
     $endereco = isset($_POST['endereco']) ? $_POST['endereco'] : '';
     $bairro = isset($_POST['bairro']) ? $_POST['bairro'] : '';
     $cidade = isset($_POST['cidade']) ? $_POST['cidade'] : '';
     $CEP = isset($_POST['CEP']) ? $_POST['CEP'] : '';
     $UF = isset($_POST['UF']) ? $_POST['UF'] : '';
-
+    
     //obtendo dados do servço
+    $os_id = isset($_POST['os_id']) ? $_POST['os_id'] : '';
     $dataChegada = isset($_POST['dataDeChegada']) ? $_POST['dataDeChegada'] : ''; // Corrigido o nome
     $dataSaida = isset($_POST['dataDeSaida']) ? $_POST['dataDeSaida'] : ''; // Corrigido o nome
     $servico = isset($_POST['servico']) ? $_POST['servico'] : '';
     $valor = isset($_POST['valor']) ? str_replace(',', '.', $_POST['valor']) : '0.00';
     $situacao = isset($_POST['situacao']) ? $_POST['situacao'] : '';
-
+    
     //obtendo dados dom ativo
+    $ativo_id = isset($_POST['ativo_id']) ? $_POST['ativo_id'] : '';
     $nomeAtivo = isset($_POST['nomeAtivo']) ? $_POST['nomeAtivo'] : '';
     $marca = isset($_POST['marca']) ? $_POST['marca'] : '';
     $modelo = isset($_POST['modelo']) ? $_POST['modelo'] : '';
     $patrimonio = isset($_POST['patrimonio']) ? $_POST['patrimonio'] : '';
-
+    
+    $image_id = isset($_POST['image_id']) ? $_POST['image_id'] : '';
     //fazendo as inserções no banco de dados
     try {
 
-        $sql = "SELECT * FROM ordem_servico_doc WHERE os_id = $os_id";
-        $query = mysqli_query($osdatabase, $sql);
 
-
-        // Verificar se a empresa já existe
-        $stmt = $osdatabase->prepare("SELECT empresa_id FROM tb_empresa_responsavel WHERE cnpj = ?");
-        $stmt->bind_param("s", $cnpjEmpresa);
-        $stmt->execute();
-        $stmt->store_result();
-
-        if ($stmt->num_rows > 0) {
-            $stmt->bind_result($empresa_id);
-            $stmt->fetch();
-            $stmt->close();
-        } else {
-            $stmt->close();
-            $stmt = $osdatabase->prepare("UPDATE tb_empresa_responsavel SET nome_fantasia = ? , cnpj = ? , email = ? , telefone = ?  WHERE ");
-            if (!$stmt) {
-                die("Erro na preparação: " . $osdatabase->error);
-            }
-            $stmt->bind_param("ssss", $nomeEmpresa, $cnpjEmpresa, $emailEmpresa, $celularEmpresa);
-            if (!$stmt->execute()) {
-                die("Erro ao inserir empresa: " . $stmt->error);
-            }
-            $empresa_id = $osdatabase->insert_id;
-            $stmt->close();
+        //inserções da empresa
+        $stmt = $osdatabase->prepare("UPDATE tb_empresa_responsavel SET nome_fantasia = ? , cnpj = ? , email = ? , telefone = ?  WHERE empresa_id = ?");
+        $stmt->bind_param("ssssi", $nomeEmpresa, $cnpjEmpresa, $emailEmpresa, $celularEmpresa, $empresa_id);
+        if (!$stmt->execute()) {
+            die("Erro ao inserir empresa: " . $stmt->error);
         }
-
+        $stmt->close();
 
         //inserções do cliente
-        $stmt = $osdatabase->prepare("UPDATE tb_cliente SET nome = ?, cpf_cnpj = ?, email = ?, telefone = ?");
-        $stmt->bind_param("ssss", $nomeCliente, $cpf_cnpjCliente, $emailCliente, $celularCliente);
+        $stmt = $osdatabase->prepare("UPDATE tb_cliente SET nome = ?, cpf_cnpj = ?, email = ?, telefone = ? WHERE cliente_id = ?");
+        $stmt->bind_param("ssssi", $nomeCliente, $cpf_cnpjCliente, $emailCliente, $celularCliente, $cliente_id);
         $stmt->execute();
-        $cliente_id = $osdatabase->insert_id;
         $stmt->close();
 
         //incerções local
-        $stmt = $osdatabase->prepare("UPDATE tb_endereco SET endereco = ?, bairro = ?, cidade = ?, cep = ?, uf = ?, cliente_id = ?");
-        $stmt->bind_param("ssssss", $endereco, $bairro, $cidade, $CEP, $UF, $cliente_id);
+        $stmt = $osdatabase->prepare("UPDATE tb_endereco SET endereco = ?, bairro = ?, cidade = ?, cep = ?, uf = ?, cliente_id = ? WHERE endereco_id = ?");
+        $stmt->bind_param("ssssssi", $endereco, $bairro, $cidade, $CEP, $UF, $cliente_id, $endereco_id);
         $stmt->execute();
-        $endereco_id = $osdatabase->insert_id;
         $stmt->close();
 
         //inserções do ativo
-        $stmt = $osdatabase->prepare("UPDATE tb_ativo SET nome = ?, marca = ?, modelo = ?, patrimonio = ?, cliente_id = ?");
-        $stmt->bind_param("sssss", $nomeAtivo, $marca, $modelo, $patrimonio, $cliente_id);
+        $stmt = $osdatabase->prepare("UPDATE tb_ativo SET nome = ?, marca = ?, modelo = ?, patrimonio = ?, cliente_id = ? WHERE ativo_id = ?");
+        $stmt->bind_param("sssssi", $nomeAtivo, $marca, $modelo, $patrimonio, $cliente_id, $ativo_id);
         $stmt->execute();
-        $ativo_id = $osdatabase->insert_id;
         $stmt->close();
 
         //Inserções do serviço
-        $stmt = $osdatabase->prepare("UPDATE tb_ordem_servico SET empresa_id = ?, cliente_id = ?, ativo_id = ?, situacao = ?, data_chegada = ?, data_saida = ?, servico = ?, valor = ?");
-        $stmt->bind_param("ssssssss", $empresa_id, $cliente_id, $ativo_id, $situacao, $dataChegada, $dataSaida, $servico, $valor);
+        $stmt = $osdatabase->prepare("UPDATE tb_ordem_servico SET empresa_id = ?, cliente_id = ?, ativo_id = ?, situacao = ?, data_chegada = ?, data_saida = ?, servico = ?, valor = ? WHERE os_id = ?");
+        $stmt->bind_param("ssssssssi", $empresa_id, $cliente_id, $ativo_id, $situacao, $dataChegada, $dataSaida, $servico, $valor, $os_id);
         $stmt->execute();
-        $os_id = $osdatabase->insert_id;
         $stmt->close();
 
         //Incerção da imagem
         //validação do formulario
-        if (isset($_FILES['ativo_image'])) {
-            $ativoImage = $_FILES['ativo_image'];
-            if ($ativoImage['error'])
-                die("Falha ao enviar a imagem do ativo");
-            if ($ativoImage['size'] > 3145728)
-                die("Arquivo muito grande! Maximo suportado é: 3MB");
+        // **Excluir imagem antiga antes de salvar a nova**
+        if (isset($_FILES['ativo_image']) && $_FILES['ativo_image']['error'] == 0) {
+            // Buscar o caminho da imagem antiga no banco
+            $stmt = $osdatabase->prepare("SELECT caminho FROM tb_image_ativo WHERE image_id = ?");
+            $stmt->bind_param("i", $image_id);
+            $stmt->execute();
+            $stmt->bind_result($caminhoImagemAntiga);
+            $stmt->fetch();
+            $stmt->close();
 
-            //definindo variaveis de separação de campo
+            // Se a imagem antiga existir no storage, exclui
+            if (!empty($caminhoImagemAntiga) && file_exists($caminhoImagemAntiga)) {
+                unlink($caminhoImagemAntiga);
+            }
+
+            // **Salvar a nova imagem**
+            $ativoImage = $_FILES['ativo_image'];
+
+            if ($ativoImage['size'] > 3145728) {
+                die("Arquivo muito grande! Máximo suportado é: 3MB");
+            }
+
             $pasta = "../../../storage/ordem_servico/ativo-image/";
             $nomeDoArquivo = $ativoImage['name'];
             $nomeNovoDoArquivo = uniqid();
             $extensaoDoArquivo = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
             $caminho = $pasta . $nomeNovoDoArquivo . "." . $extensaoDoArquivo;
 
-            if ($extensaoDoArquivo != "jpg" && $extensaoDoArquivo != 'png' && $extensaoDoArquivo != 'jpeg')
+            if (!in_array($extensaoDoArquivo, ["jpg", "jpeg", "png"])) {
                 die("Tipo de arquivo não aceito");
+            }
 
-            //movendo arquivos para a pasta e o banco de dados
-            $moverArquivo = move_uploaded_file($ativoImage["tmp_name"], $caminho);
-            if ($moverArquivo == true) {
-                $osdatabase->query("UPDATE tb_image_ativo SET nome = '$nomeNovoDoArquivo', caminho = '$caminho', ativo_id ='$ativo_id'")
-                    or die($osdatabase->error);
+            // Move a nova imagem
+            if (move_uploaded_file($ativoImage["tmp_name"], $caminho)) {
+                // Atualiza o banco de dados com a nova imagem
+                $stmt = $osdatabase->prepare("UPDATE tb_image_ativo SET nome = ?, caminho = ?, ativo_id = ? WHERE image_id = ?");
+                $stmt->bind_param("sssi", $nomeNovoDoArquivo, $caminho, $ativo_id, $image_id);
+                $stmt->execute();
+                $stmt->close();
             } else {
-                echo "<p>Erro ao enviar a imagem do ativo</p>";
+                die("Erro ao enviar a imagem do ativo");
             }
         }
 
         $osdatabase->commit();
     } catch (Exception $e) {
         $osdatabase->rollback();
+        die("Erro ao atualizar OS: " . $e->getMessage());
     }
     header('Location: os_panel.php');
     exit;
+}
+
+
+function excluirOs($os_id)
+{
+    require "../config/conection_db.php";
+
+    try {
+        $osdatabase->begin_transaction();
+
+        // 1️⃣ Buscar a imagem associada antes de deletar
+        $stmt = $osdatabase->prepare("SELECT caminho FROM tb_image_ativo WHERE ativo_id = (SELECT ativo_id FROM tb_ordem_servico WHERE os_id = ?)");
+        $stmt->bind_param("i", $os_id);
+        $stmt->execute();
+        $stmt->bind_result($caminhoImagem);
+        $stmt->fetch();
+        $stmt->close();
+
+        // 2️⃣ Excluir a imagem do servidor (se existir)
+        if (!empty($caminhoImagem) && file_exists($caminhoImagem)) {
+            unlink($caminhoImagem);
+        }
+
+        // 3️⃣ Excluir registros relacionados no banco
+        $stmt = $osdatabase->prepare("DELETE FROM tb_image_ativo WHERE ativo_id = (SELECT ativo_id FROM tb_ordem_servico WHERE os_id = ?)");
+        $stmt->bind_param("i", $os_id);
+        $stmt->execute();
+        $stmt->close();
+
+        $stmt = $osdatabase->prepare("DELETE FROM tb_ordem_servico WHERE os_id = ?");
+        $stmt->bind_param("i", $os_id);
+        $stmt->execute();
+        $stmt->close();
+
+        $stmt = $osdatabase->prepare("DELETE FROM tb_ativo WHERE ativo_id = (SELECT ativo_id FROM tb_ordem_servico WHERE os_id = ?)");
+        $stmt->bind_param("i", $os_id);
+        $stmt->execute();
+        $stmt->close();
+
+        $stmt = $osdatabase->prepare("DELETE FROM tb_endereco WHERE endereco_id = (SELECT endereco_id FROM tb_cliente WHERE cliente_id = (SELECT cliente_id FROM tb_ordem_servico WHERE os_id = ?))");
+        $stmt->bind_param("i", $os_id);
+        $stmt->execute();
+        $stmt->close();
+
+        $stmt = $osdatabase->prepare("DELETE FROM tb_cliente WHERE cliente_id = (SELECT cliente_id FROM tb_ordem_servico WHERE os_id = ?)");
+        $stmt->bind_param("i", $os_id);
+        $stmt->execute();
+        $stmt->close();
+
+        $stmt = $osdatabase->prepare("DELETE FROM tb_empresa_responsavel WHERE empresa_id = (SELECT empresa_id FROM tb_ordem_servico WHERE os_id = ?)");
+        $stmt->bind_param("i", $os_id);
+        $stmt->execute();
+        $stmt->close();
+
+        $osdatabase->commit();
+        echo "Ordem de serviço excluída com sucesso!";
+    } catch (Exception $e) {
+        $osdatabase->rollback();
+        die("Erro ao excluir OS: " . $e->getMessage());
+    }
 }
