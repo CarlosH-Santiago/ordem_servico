@@ -1,3 +1,13 @@
+<?php 
+
+require "../src/function_logout.php";
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  logout();
+}
+
+?>
+
+
 <head>
 <link rel="stylesheet" href="../styles/header.css" />
 </head>
@@ -32,7 +42,16 @@
             aria-labelledby="offcanvasNavbarLabel"
           >
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel"><img
+              src="../assets/image/cvmulti 1.png"
+              alt="Logo"
+              width="60"
+              height="24"
+              class="d-inline-block align-text-top"
+            />
+            <span>
+                MULTI VARIEDADES
+            </span></h5>
               <button
                 type="button"
                 class="btn-close"
@@ -43,12 +62,12 @@
             <div class="offcanvas-body bg-dark">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#"
-                    >Home</a
+                  <a class="nav-link" aria-current="page" href="#"
+                    >Painel</a
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
+                  <a class="nav-link" href="#">Criar Ordem</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a
@@ -74,16 +93,9 @@
                   </ul>
                 </li>
               </ul>
-              <form class="d-flex mt-3" role="search">
-                <input
-                  class="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button class="btn btn-outline-warning" type="submit">
-                  Search
-                </button>
+              <form class="container-fluid justify-content-start" method="POST" action="">
+                <button type="submit"  class="btn btn-outline-danger my-2" name="logout" class="button">Sair</button>
+
               </form>
             </div>
           </div>

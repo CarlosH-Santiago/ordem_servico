@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Criar ordem de serviço</title>
+    <title>Editar - Ordem de Serviço</title>
     <link rel="stylesheet" href="../assets/library/bootstrap.min.css" />
     <link
         rel="stylesheet"
