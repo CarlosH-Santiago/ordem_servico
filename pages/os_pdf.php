@@ -1,11 +1,8 @@
 <?php
-include "../src/function_doc_ordem_servico.php";
 require "../config/conection_db.php";
 //require "../src/session_verify.php";
+require "../vendor/autoload.php";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    editarOs();
-}
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Editar - Ordem de Serviço</title>
+    <title>Ver - Ordem de Serviço</title>
     <link rel="stylesheet" href="../assets/library/bootstrap.min.css" />
     <link
         rel="stylesheet"
@@ -29,26 +26,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ?>
     </header>
 
-    <section class="cvimage"><img src="../assets/image/CV MULTIVARIEDADES_COLOR.png" alt="cvmulitivariedades"></section>
-
     <main>
         <?php
         if (isset($_GET['os_id'])) {
             $os_id = mysqli_real_escape_string($osdatabase, $_GET['os_id']);
-            $sql = "SELECT * FROM view_all WHERE os_id = $os_id";
+            $sql = "SELECT * FROM ordem_servico_doc WHERE os_id = $os_id";
             $query = mysqli_query($osdatabase, $sql);
 
             if (mysqli_num_rows($query) > 0) {
                 $ordem_servico = mysqli_fetch_array($query);
 
         ?>
-                <form enctype="multipart/form-data" action="" method="post" id="osForm">
+                <form name="pdf" enctype="multipart/form-data" action="" method="post" id="osForm">
                     <input type="hidden" name="os_id" value="<?= $ordem_servico['os_id']; ?>">
-                    <input type="hidden" name="empresa_id" value="<?= $ordem_servico['empresa_id']; ?>">
-                    <input type="hidden" name="cliente_id" value="<?= $ordem_servico['cliente_id']; ?>">
-                    <input type="hidden" name="endereco_id" value="<?= $ordem_servico['endereco_id']; ?>">
-                    <input type="hidden" name="ativo_id" value="<?= $ordem_servico['ativo_id']; ?>">
-                    <input type="hidden" name="image_id" value="<?= $ordem_servico['image_id']; ?>">
                     <div class="imagem">
                         <div class="image-preview" id="image-preview">
                             <img id="previewImage" alt="Imagem do Ativo" src="<?= $ordem_servico['caminho']; ?>" />
@@ -69,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 type="text"
                                 name="nomeEmpresa"
                                 id="id_nome"
+                                readonly
                                 value="<?= $ordem_servico['empresa_nome'] ?? '' ?>" />
                             <label class="b" id="cnpjEmpresa" for="cnpjEmpresa">CNPJ</label>
                             <input
@@ -76,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 type="text"
                                 name="cnpjEmpresa"
                                 id="id_cnpjEmpresa"
-                                
+                                readonly
                                 value="<?= $ordem_servico['cnpj'] ?? '' ?>" />
                             <label class="c" id="emailEmpresa" for="email">E-mail</label>
                             <input
@@ -85,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 name="emailEmpresa"
                                 id="id_email"
                                 placeholder="exemple@email.com"
-                                
+                                readonly
                                 value="<?= $ordem_servico['empresa_email'] ?? '' ?>" />
                             <label class="d" id="celularEmpresa" for="celular">Celular/Whatsapp</label>
                             <input
@@ -95,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 id="id_celular"
                                 placeholder="Ex.: +55 (75) 90000-0000"
                                 pattern="\(\d{2}\) 9\d{4}-\d{4}"
-                                
+                                readonly
                                 value="<?= $ordem_servico['empresa_telefone'] ?? '' ?>" />
                         </div>
 
@@ -107,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 type="text"
                                 name="nomeCliente"
                                 id="id_nome"
-                                
+                                readonly
                                 value="<?= $ordem_servico['cliente_nome'] ?? '' ?>"
                                 required />
                             <label class="b" id="cpfcnpjCliente" for="cpfCnpj">CPF/CNPJ</label>
@@ -115,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 class="right"
                                 type="text"
                                 name="cpfCnpj"
-                                
+                                readonly
                                 value="<?= $ordem_servico['cpf_cnpj'] ?? '' ?>"
                                 id="id_cpfCnpj" />
 
@@ -126,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 name="emailCliente"
                                 id="id_email"
                                 placeholder="exemple@email.com"
-                                
+                                readonly
                                 value="<?= $ordem_servico['cliente_email'] ?? '' ?>" />
                             <label class="d" id="celularCliente" for="celular">Celular/Whatsapp</label>
                             <input
@@ -136,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 id="id_celular"
                                 placeholder="Ex.: (75) 90000-0000"
                                 pattern="\(\d{2}\) 9\d{4}-\d{4}"
-                                
+                                readonly
                                 value="<?= $ordem_servico['cliente_telefone'] ?? '' ?>"
                                 required />
                         </div>
@@ -150,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 name="endereco"
                                 id="endereco"
                                 placeholder="Rua, Avenida, etc."
-                                
+                                readonly
                                 value="<?= $ordem_servico['endereco'] ?? '' ?>" />
                             <label class="b" id="bairro" for="bairro">Bairro</label>
                             <input
@@ -159,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 name="bairro"
                                 id="id_bairro"
                                 placeholder="Ex.: Centro"
-                                
+                                readonly
                                 value="<?= $ordem_servico['bairro'] ?? '' ?>" />
                             <label class="c" id="cidade" for="cidade">Cidade</label>
                             <input
@@ -168,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 name="cidade"
                                 id="id_cidade"
                                 placeholder="Ex.: Irará"
-                                
+                                readonly
                                 value="<?= $ordem_servico['cidade'] ?? '' ?>" />
                             <label class="CEP" id="CEP" for="CEP">Codigo postal</label>
                             <input
@@ -177,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 name="CEP"
                                 id="id_postal"
                                 placeholder="Ex.: 444255-000"
-                                
+                                readonly
                                 value="<?= $ordem_servico['cep'] ?? '' ?>" />
                             <label class="UF" id="UF" for="UF">UF</label>
                             <input
@@ -186,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 name="UF"
                                 id="id_uf"
                                 placeholder="Ex.: BA"
-                                
+                                readonly
                                 value="<?= $ordem_servico['uf'] ?? '' ?>" />
                         </div>
 
@@ -197,7 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 class="left"
                                 type="date"
                                 name="dataDeChegada"
-                                
+                                readonly
                                 value="<?= $ordem_servico['data_chegada'] ?>"
                                 id="id_data_chegada" />
                             <label class="b" id="saida" for="horarioDeSaida">Data de Saída</label>
@@ -205,17 +196,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 class="right"
                                 type="date"
                                 name="dataDeSaida"
-                                
+                                readonly
                                 value="<?= $ordem_servico['data_saida'] ?? ''; ?>"
                                 id="id_data_chegada" />
                             <label class="valor" for="valor">Valor R$</label>
-                            <input type="text" id="valor"  name="valor"  class="currency" placeholder="0.00" 
+                            <input type="text" id="valor"  name="valor"  class="currency" placeholder="0,00" readonly
                                 value="<?= $ordem_servico['valor'] ?? '' ?>" />
                             <label id="servico" for="servico">Serviço Realizado</label>
                             <textarea
                                 class="textarea"
                                 name="servico"
-                                
+                                readonly
                                 id="id_servico"><?= $ordem_servico['servico'] ?? '' ?></textarea>
                         </div>
 
@@ -227,7 +218,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 type="text"
                                 name="nomeAtivo"
                                 id="id_ativo"
-                                
+                                readonly
                                 value="<?= $ordem_servico['ativo_nome'] ?? '' ?>" />
                             <label class="b" id="2" for="nome">Marca</label>
                             <input
@@ -235,7 +226,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 type="text"
                                 name="marca"
                                 id="id_marca"
-                                
+                                readonly
                                 value="<?= $ordem_servico['marca'] ?? '' ?>" />
                             <label class="c" id="3" for="nome">Modelo</label>
                             <input
@@ -243,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 type="text"
                                 name="modelo"
                                 id="id_modelo"
-                                
+                                readonly
                                 value="<?= $ordem_servico['modelo'] ?? '' ?>" />
                             <label class="d" id="4" for="nome">Patrimônio/Número de Série</label>
                             <input
@@ -251,21 +242,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 type="text"
                                 name="patrimonio"
                                 id="id_patrimonio"
-                                
+                                readonly
                                 value="<?= $ordem_servico['patrimonio'] ?? '' ?>" />
                         </div>
                         <div class="input-group SITUACAO row mx-1">
 
                             <label for="situacao">Situação da OS:</label>
-                            <select name="situacao" id="situacao" 
+                            <select name="situacao" id="situacao" readonly
                                 value="<?= $ordem_servico['situcao']; ?>">
                                 <option value="pendente">Pendente</option>
                                 <option value="finalizada">Finalizada</option>
                             </select>
                         </div>
-                        <button type="submit" name="update_os">Salvar</button>
-                        <button class="btn btn-danger btn-sm mx-1" type="cancel" name="cancel_edit">Cancelar</button>
-                        
+                        <button onclick="window.location.href='os_panel.php'" class="btn btn-danger btn-sm mx-1" type="cancel" name="voltar">Voltar</button>
+
                     </div>
                 </form>
         <?php
@@ -276,9 +266,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         ?>
     </main>
+    <script>
+        function voltarPagina() {
+            window.location.href="os_panel.php";        
+        }
 
-    <section class="cvimage"><img src="../assets/image/CV MULTIVARIEDADES_COLOR.png" alt="cvmulitivariedades"></section>
-
+        function gerarPDF(){
+            window.location.href = "os_pdf.php"; 
+        }
+    </script>
     <script src="../assets/library/bootstrap.bundle.min.js"></script>
 </body>
 

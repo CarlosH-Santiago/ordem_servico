@@ -71,6 +71,7 @@ require "../config/conection_db.php";
                         <a href="os_editor.php?os_id=<?= $OrdemServico['os_id']; ?>" class="btn btn-success btn-sm"><i class="bi bi-pencil-square"></i> Editar</a>
                         <form action="../src/excluir_ordem.php" method="POST" class="d-inline">
                           <input type="hidden" name="delete_os" value="<?= $OrdemServico['os_id']; ?>">
+                          <a href="os_pdf.php?os_id=<?= $OrdemServico['os_id']; ?>" class="btn btn-primary btn-sm"><i class="bi bi-filetype-pdf"></i> Gerar PDF</a>
                           <button onclick="return confirm('Tem certeza que deseja excluir esta Ordem de Serviço?')" type="submit" class="btn btn-danger btn-sm">
                             <i class="bi bi-trash"></i> Excluir
                           </button>

@@ -1,4 +1,5 @@
 <?php
+    /*
     session_start();
     
     // Se o usuário não estiver logado, redireciona para a página de login
@@ -6,4 +7,6 @@
         header("Location: index.php");
         exit();
     }
+
+    */
 ?>

@@ -26,8 +26,8 @@ function criarOs()
     $UF = isset($_POST['UF']) ? $_POST['UF'] : '';
 
     //obtendo dados do servço
-    $dataChegada = isset($_POST['dataDeChegada']) ? $_POST['dataDeChegada'] : ''; // Corrigido o nome
-    $dataSaida = isset($_POST['dataDeSaida']) ? $_POST['dataDeSaida'] : ''; // Corrigido o nome
+    $dataChegada = isset($_POST['dataDeChegada']) ? $_POST['dataDeChegada'] : ''; 
+    $dataSaida = isset($_POST['dataDeSaida']) ? $_POST['dataDeSaida'] : ''; 
     $servico = isset($_POST['servico']) ? $_POST['servico'] : '';
     $valor = isset($_POST['valor']) ? str_replace(',', '.', $_POST['valor']) : '0.00';
     $situacao = isset($_POST['situacao']) ? $_POST['situacao'] : '';
@@ -163,8 +163,8 @@ function editarOs()
     
     //obtendo dados do servço
     $os_id = isset($_POST['os_id']) ? $_POST['os_id'] : '';
-    $dataChegada = isset($_POST['dataDeChegada']) ? $_POST['dataDeChegada'] : ''; // Corrigido o nome
-    $dataSaida = isset($_POST['dataDeSaida']) ? $_POST['dataDeSaida'] : ''; // Corrigido o nome
+    $dataChegada = isset($_POST['dataDeChegada']) ? $_POST['dataDeChegada'] : ''; 
+    $dataSaida = isset($_POST['dataDeSaida']) ? $_POST['dataDeSaida'] : '';
     $servico = isset($_POST['servico']) ? $_POST['servico'] : '';
     $valor = isset($_POST['valor']) ? str_replace(',', '.', $_POST['valor']) : '0.00';
     $situacao = isset($_POST['situacao']) ? $_POST['situacao'] : '';

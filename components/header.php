@@ -1,7 +1,7 @@
 <?php 
 
 require "../src/function_logout.php";
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['logout']))  {
   logout();
 }
 
@@ -93,8 +93,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   </ul>
                 </li>
               </ul>
-              <form class="container-fluid justify-content-start" method="POST" action="">
-                <button type="submit"  class="btn btn-outline-danger my-2" name="logout" class="button">Sair</button>
+              <form name="logout" class="container-fluid justify-content-start" method="POST" action="../src/function_logout.php">
+                <button  class="btn btn-outline-danger my-2" name="logout" class="button">Sair</button>
 
               </form>
             </div>

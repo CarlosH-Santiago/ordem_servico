@@ -2,6 +2,14 @@
 require "../config/conection_db.php";
 //require "../src/session_verify.php";
 
+function voltar(){
+    header("Location: index.php"); // Redireciona para a página de login
+    exit();
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['voltar']))  {
+        voltar();
+    }
+}
 
 ?>
 
@@ -39,7 +47,7 @@ require "../config/conection_db.php";
                 $ordem_servico = mysqli_fetch_array($query);
 
         ?>
-                <form enctype="multipart/form-data" action="" method="post" id="osForm">
+                <form name="view" enctype="multipart/form-data" action="os_panel.php" method="post" id="osForm">
                     <input type="hidden" name="os_id" value="<?= $ordem_servico['os_id']; ?>">
                     <div class="imagem">
                         <div class="image-preview" id="image-preview">
@@ -202,7 +210,7 @@ require "../config/conection_db.php";
                                 value="<?= $ordem_servico['data_saida'] ?? ''; ?>"
                                 id="id_data_chegada" />
                             <label class="valor" for="valor">Valor R$</label>
-                            <input type="text" id="valor" class="currency" placeholder="0,00" readonly
+                            <input type="text" id="valor"  name="valor"  class="currency" placeholder="0,00" readonly
                                 value="<?= $ordem_servico['valor'] ?? '' ?>" />
                             <label id="servico" for="servico">Serviço Realizado</label>
                             <textarea
@@ -256,7 +264,7 @@ require "../config/conection_db.php";
                                 <option value="finalizada">Finalizada</option>
                             </select>
                         </div>
-                        <button onclick="return location.href='os_panel.php'" class="btn btn-danger btn-sm mx-1" type="cancel" name="cancel_edit">Cancelar</button>
+                        <button class="btn btn-danger btn-sm mx-1" name="voltar">voltar</button>
                     </div>
                 </form>
         <?php
@@ -269,7 +277,16 @@ require "../config/conection_db.php";
     </main>
 
     <section class="cvimage"><img src="../assets/image/CV MULTIVARIEDADES_COLOR.png" alt="cvmulitivariedades"></section>
+    
+<script>
+        function voltarPagina() {
+            window.location.href = "os_panel.php"; 
+        }
 
+        function gerarPDF(){
+            window.location.href = "os_pdf.php"; 
+        }
+    </script>
     <script src="../assets/library/bootstrap.bundle.min.js"></script>
 </body>
 

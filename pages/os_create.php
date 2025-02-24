@@ -176,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             name="dataDeSaida"
             id="id_data_chegada" />
           <label class="valor" for="valor">Valor R$</label>
-          <input type="text" id="valor" class="currency" placeholder="0.00" />
+          <input type="text" id="valor" name="valor" class="currency" placeholder="0.00" />
           <label id="servico" for="servico">Serviço Realizado</label>
           <textarea
             class="textarea"
