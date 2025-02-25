@@ -47,7 +47,7 @@ function voltar(){
                 $ordem_servico = mysqli_fetch_array($query);
 
         ?>
-                <form name="view" enctype="multipart/form-data" action="os_panel.php" method="post" id="osForm">
+                <form name="view" enctype="multipart/form-data" action="" method="post" id="osForm">
                     <input type="hidden" name="os_id" value="<?= $ordem_servico['os_id']; ?>">
                     <div class="imagem">
                         <div class="image-preview" id="image-preview">
@@ -264,7 +264,7 @@ function voltar(){
                                 <option value="finalizada">Finalizada</option>
                             </select>
                         </div>
-                        <button class="btn btn-danger btn-sm mx-1" name="voltar">voltar</button>
+                        <button onclick="voltarPagina()" class="btn btn-danger btn-sm mx-1" name="voltar">voltar</button>
                     </div>
                 </form>
         <?php

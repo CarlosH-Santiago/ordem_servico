@@ -69,13 +69,11 @@ require "../config/conection_db.php";
                       <td>
                         <a href="os_view.php?os_id=<?= $OrdemServico['os_id']; ?>" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i> Vizualizar</a>
                         <a href="os_editor.php?os_id=<?= $OrdemServico['os_id']; ?>" class="btn btn-success btn-sm"><i class="bi bi-pencil-square"></i> Editar</a>
-                        <form action="../src/excluir_ordem.php" method="POST" class="d-inline">
-                          <input type="hidden" name="delete_os" value="<?= $OrdemServico['os_id']; ?>">
-                          <a href="os_pdf.php?os_id=<?= $OrdemServico['os_id']; ?>" class="btn btn-primary btn-sm"><i class="bi bi-filetype-pdf"></i> Gerar PDF</a>
-                          <button onclick="return confirm('Tem certeza que deseja excluir esta Ordem de Serviço?')" type="submit" class="btn btn-danger btn-sm">
-                            <i class="bi bi-trash"></i> Excluir
-                          </button>
-                        </form>
+                        <a href="os_pdf.php?os_id=<?= $OrdemServico['os_id']; ?>" class="btn btn-primary btn-sm"><i class="bi bi-filetype-pdf"></i> Gerar PDF</a>
+
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal_excluir_os">
+                          <i class="bi bi-trash"></i> Excluir
+                        </button>
 
                       </td>
                     </tr>
@@ -95,6 +93,32 @@ require "../config/conection_db.php";
 
     </div>
   </main>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modal_excluir_os" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog bg-dark rounded">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-light">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir Ordem de Serviço</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body bg-dark text-light">
+          Tem certeza que deseja excluiir esté ordem de serviço?
+        </div>
+        <div class="modal-footer bg-dark text-light">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"> <i class="bi bi-arrow-return-left"></i> Close</button>
+
+          <form action="../src/excluir_ordem.php" method="POST" class="d-inline">
+            <input type="hidden" name="delete_os" value="<?= $OrdemServico['os_id']; ?>">
+            <button type="submit" class="btn btn-danger btn-sm">
+              <i class="bi bi-trash"></i> Excluir
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
