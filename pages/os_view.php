@@ -24,7 +24,7 @@ function voltar(){
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-    <link rel="stylesheet" href="../styles/os_docs.css" />
+    <link rel="stylesheet" href="../styles/os_document.css" />
 </head>
 
 <body>
@@ -264,10 +264,10 @@ function voltar(){
                                 <option value="finalizada">Finalizada</option>
                             </select>
                         </div>
-                        <button onclick="voltarPagina()" class="btn btn-danger btn-sm mx-1" name="voltar">voltar</button>
+                        <button type="submit" class="btn btn-secondary btn-sm mx-1" name="gerarPDF">Gerar PDF</button>
                     </div>
                 </form>
-        <?php
+                <?php
             } else {
                 header("Location: os_panel.php");
                 echo '<h5>Usuário nao encontrado</h5>';
@@ -275,6 +275,12 @@ function voltar(){
         }
         ?>
     </main>
+    <aside>
+    <button type="submit" class="btn btn-secondary btn-sm mx-1" name="gerarPDF"><i class="bi bi-filetype-pdf"></i>  Gerar PDF</button>
+
+        <button onclick="voltarPagina()" class="btn btn-danger btn-sm mx-1" name="voltar"><i class="bi bi-arrow-return-left"></i> voltar</button>
+
+    </aside>
 
     <section class="cvimage"><img src="../assets/image/CV MULTIVARIEDADES_COLOR.png" alt="cvmulitivariedades"></section>
     

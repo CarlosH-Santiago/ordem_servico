@@ -282,3 +282,12 @@ button[type="submit"]:hover {
   left: 2.5px;
   background: transparent;
 }
+
+aside {
+  height: 92vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+}

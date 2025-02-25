@@ -16,7 +16,7 @@ require "../vendor/autoload.php";
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-    <link rel="stylesheet" href="../styles/os_docs.css" />
+    <link rel="stylesheet" href="../styles/os_document.css" />
 </head>
 
 <body>
@@ -254,11 +254,10 @@ require "../vendor/autoload.php";
                                 <option value="finalizada">Finalizada</option>
                             </select>
                         </div>
-                        <button onclick="window.location.href='os_panel.php'" class="btn btn-danger btn-sm mx-1" type="cancel" name="voltar">Voltar</button>
-
+                        <a class="not_btn"> </a>
                     </div>
                 </form>
-        <?php
+                <?php
             } else {
                 header("Location: os_panel.php");
                 echo '<h5>Usuário nao encontrado</h5>';
@@ -266,6 +265,10 @@ require "../vendor/autoload.php";
         }
         ?>
     </main>
+    <aside>
+        <button type="submit" class="btn btn-secondary btn-sm mx-1" name="gerarPDF"><i class="bi bi-filetype-pdf"></i>  Gerar PDF</button>
+        <button onclick="voltarPagina()" class="btn btn-danger btn-sm mx-1" name="voltar"><i class="bi bi-arrow-return-left"></i> voltar</button>
+    </aside>
     <script>
         function voltarPagina() {
             window.location.href="os_panel.php";        

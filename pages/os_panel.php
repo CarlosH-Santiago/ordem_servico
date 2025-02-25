@@ -106,7 +106,7 @@ require "../config/conection_db.php";
           Tem certeza que deseja excluiir esté ordem de serviço?
         </div>
         <div class="modal-footer bg-dark text-light">
-          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"> <i class="bi bi-arrow-return-left"></i> Close</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"> <i class="bi bi-arrow-return-left"></i>Cancelar</button>
 
           <form action="../src/excluir_ordem.php" method="POST" class="d-inline">
             <input type="hidden" name="delete_os" value="<?= $OrdemServico['os_id']; ?>">
