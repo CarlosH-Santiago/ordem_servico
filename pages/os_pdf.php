@@ -266,7 +266,7 @@ require "../vendor/autoload.php";
         ?>
     </main>
     <aside>
-        <button type="submit" class="btn btn-secondary btn-sm mx-1" name="gerarPDF"><i class="bi bi-filetype-pdf"></i>  Gerar PDF</button>
+        <a href="../src/generate_pdf.php?os_id=<?= $ordem_servico['os_id']; ?>" class="btn btn-primary btn-sm mx-1" name="gerarPDF"><i class="bi bi-filetype-pdf"></i> Gerar PDF</a>
         <button onclick="voltarPagina()" class="btn btn-danger btn-sm mx-1" name="voltar"><i class="bi bi-arrow-return-left"></i> voltar</button>
     </aside>
     <script>
